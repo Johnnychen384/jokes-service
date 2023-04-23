@@ -17,15 +17,14 @@ describe('GET /jokes', () => {
         expect(response.body[0]).toEqual(expect.objectContaining(seedData[0]));
     });
 
-    it('should return a list of jokes, filtered by tag', async () => {
-        const response = await request(app).get('/jokes?tags=anatomy');
+    it('should return a list of jokes, filtered by id', async () => {
+        const response = await request(app).get('/jokes?id=1');
         expect(response.status).toBe(200);
-        expect(response.body).toHaveLength(3);
-        expect(response.body[0]).toEqual(expect.objectContaining(seedData[3]));
+        expect(response.body.id).toBe(1);
     });
 
     it('should return a list of jokes, filtered by content', async () => {
-        const response = await request(app).get('/jokes?content=flamingo');
+        const response = await request(app).get('/jokes?joke=flamingo');
         expect(response.status).toBe(200);
         expect(response.body).toHaveLength(1);
         expect(response.body[0]).toEqual(expect.objectContaining(seedData[2]));

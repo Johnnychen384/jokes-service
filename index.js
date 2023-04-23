@@ -8,8 +8,20 @@ app.use(express.urlencoded({extended:true}));
 app.get('/jokes', async (req, res, next) => {
   try {
     // TODO - filter the jokes by tags and content
-    const jokes = [];
-    res.send(jokes);
+    const { id, joke } = req.query;
+    let arr;
+    
+    if(id){
+      arr = await Joke.findByPk(id)
+    } else if (joke){
+      const array = await Joke.findAll()
+      arr = array.filter(obj => obj.joke.includes(joke))
+    } else {
+      arr = await Joke.findAll()
+    }
+    
+    
+    res.send(arr);
   } catch (error) {
     console.error(error);
     next(error)
